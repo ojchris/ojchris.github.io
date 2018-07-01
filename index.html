@@ -46,7 +46,7 @@ let toCurrcy = document.querySelector('#toBx  option:checked').value;
 
 if(!!amountToConvrt && !!fromCurrcy && !!toCurrcy){
 
-  convertCurrency(amountToConvrt, fromCurrcy, toCurrcy, function(err, amount) {
+  convertCurrency(amountToConvrt, fromCurrcy, toCurrcy, (err, amount) => {
     console.log(amount);
     //let convtnResult = amount;
     //document.querySelector('resultAmount').value = convtnResult;
@@ -56,18 +56,15 @@ if(!!amountToConvrt && !!fromCurrcy && !!toCurrcy){
 
         fromCurrency = encodeURIComponent(fromCurrency);
         toCurrency = encodeURIComponent(toCurrency);
-        var query = fromCurrency + '_' + toCurrency;
+        const query = `${fromCurrency}_${toCurrency}`;
 
-        var url = 'https://free.currencyconverterapi.com/api/v5/convert?q='
-                  + query + '&compact=ultra';
+        const url = `https://free.currencyconverterapi.com/api/v5/convert?q=${query}&compact=ultra`;
 
                   //https://free.currencyconverterapi.com/api/v5/convert?q=USD_NGN&compact=ultra
 
                   fetch('url')
-                  .then(function(response) {
-                    return response.json();
-                  })
-                  .then(function(myJson) {
+                  .then(response => response.json())
+                  .then(myJson => {
                     console.log(myJson);
                   });
 
@@ -77,11 +74,8 @@ if(!!amountToConvrt && !!fromCurrcy && !!toCurrcy){
     
 }
 
-window.addEventListener('load', function () {
-        fetch('https://free.currencyconverterapi.com/api/v5/currencies').then(function(response){
-
-          return response.json();
-          }).then(function(data){
+window.addEventListener('load', () => {
+        fetch('https://free.currencyconverterapi.com/api/v5/currencies').then(response => response.json()).then(data => {
           //let sortData = data.results;
           //let currencies = sortData.sort();
           let currencies = data.results;
@@ -95,7 +89,7 @@ window.addEventListener('load', function () {
             document.querySelector('#toBx').innerHTML += selectOptn;
           }
 
-          }).catch(function(){
+          }).catch(() => {
           console.log('it failed');
           });
 

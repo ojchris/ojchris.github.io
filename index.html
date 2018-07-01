@@ -42,29 +42,28 @@ let toCurrcy = document.querySelector('#toBx  option:checked').value;
 if(!!amountToConvrt && !!fromCurrcy && !!toCurrcy){
 
   convertCurrency(amountToConvrt, fromCurrcy, toCurrcy, function(err, amount) {
-    console.log(amount);
+    //console.log(amount);
     //let convtnResult = amount;
-    //document.querySelector('resultAmount').value = convtnResult;
+    document.querySelector('resultAmount').value = amount;
   });
-      function convertCurrency(amount, fromCurrency, toCurrency, cb) {
+  
+  function convertCurrency(amount, fromCurrency, toCurrency, cb) {
         //var apiKey = 'your-api-key-here';
 
-        fromCurrency = encodeURIComponent(fromCurrency);
-        toCurrency = encodeURIComponent(toCurrency);
-        var query = fromCurrency + '_' + toCurrency;
+        const fromCur = 'USD';
+        const toCur = 'NGN';
+        //let fromCurrency = encodeURIComponent(fromCur);
+        //let toCurrency = encodeURIComponent(toCur);
+        const query = `${fromCur}_${toCur}`;
 
-        var url = 'https://free.currencyconverterapi.com/api/v5/convert?q='
-                  + query + '&compact=ultra';
-
-                  //https://free.currencyconverterapi.com/api/v5/convert?q=USD_NGN&compact=ultra
-
-                  fetch('url')
-                  .then(function(response) {
-                    return response.json();
-                  })
-                  .then(function(myJson) {
-                    console.log(myJson);
-                  });
+        const url = `https://free.currencyconverterapi.com/api/v5/convert?q=${query}&compact=ultra`;
+        fetch(url).then(response => response.json()).then(data => {
+          let exchangeRate = data[query];
+          let resultRate = exchangeRate * amountToConvrt;
+          return resultRate;
+        }).catch(() => {
+          console.log('it failed');
+          });
 
         
       }

@@ -32,8 +32,7 @@
     
 
 function processFormSubmit(){
-  let https = require('https');
-  //let https = 'https';
+
 //create variable from element values
 let amountToConvrt = document.querySelector('#origintAmt').value;
 let fromCurrcy = document.querySelector('#fromBx  option:checked').value;
@@ -44,14 +43,14 @@ if(!!amountToConvrt && !!fromCurrcy && !!toCurrcy){
   convertCurrency(amountToConvrt, fromCurrcy, toCurrcy, function(err, amount) {
     //console.log(amount);
     //let convtnResult = amount;
-    document.querySelector('resultAmount').value = amount;
+    document.querySelector('#resultAmt').value = amount;
   });
   
   function convertCurrency(amount, fromCurrency, toCurrency, cb) {
         //var apiKey = 'your-api-key-here';
 
-        const fromCur = 'USD';
-        const toCur = 'NGN';
+        const fromCur = fromCurrency;
+        const toCur = toCurrency;
         //let fromCurrency = encodeURIComponent(fromCur);
         //let toCurrency = encodeURIComponent(toCur);
         const query = `${fromCur}_${toCur}`;
@@ -195,7 +194,7 @@ window.addEventListener('load', function () {
                     
                   </div>
                   <div class="col-md">
-                    <input type="submit" value="Convert" id="convertBtn" name="convertBtn"  class="btn btn-primary btn-block">
+                    <input type="submit" value="Convert" id="convertBtn" name="convertBtn"  onsubmit="processFormSubmit()" class="btn btn-primary btn-block">
                   </div>
                 </div>
               </div>

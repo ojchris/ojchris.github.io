@@ -28,23 +28,21 @@
     <link rel="stylesheet" href="assets/css/helpers.css">
     <link rel="stylesheet" href="assets/css/style.css">
 
-  <script>
+<script>
     
-
+    
+document.getElementById('#resultAmt').addEventListener("change", processFormSubmit);
 function processFormSubmit(){
 
 //create variable from element values
 let amountToConvrt = document.querySelector('#origintAmt').value;
 let fromCurrcy = document.querySelector('#fromBx  option:checked').value;
 let toCurrcy = document.querySelector('#toBx  option:checked').value;
+//let originOrResultBx = which box changed
 
 if(!!amountToConvrt && !!fromCurrcy && !!toCurrcy){
 
-  convertCurrency(amountToConvrt, fromCurrcy, toCurrcy, function(err, amount) {
-    //console.log(amount);
-    //let convtnResult = amount;
-    document.querySelector('#resultAmt').value = amount;
-  });
+  convertCurrency(amountToConvrt, fromCurrcy, toCurrcy);
   
   function convertCurrency(amount, fromCurrency, toCurrency, cb) {
         //var apiKey = 'your-api-key-here';
@@ -54,16 +52,27 @@ if(!!amountToConvrt && !!fromCurrcy && !!toCurrcy){
         //let fromCurrency = encodeURIComponent(fromCur);
         //let toCurrency = encodeURIComponent(toCur);
         const query = `${fromCur}_${toCur}`;
+        let resultRate = null;
 
         const url = `https://free.currencyconverterapi.com/api/v5/convert?q=${query}&compact=ultra`;
         fetch(url).then(response => response.json()).then(data => {
           let exchangeRate = data[query];
-          let resultRate = exchangeRate * amountToConvrt;
-          return resultRate;
+          resultRate = exchangeRate * amount;
+          //return resultRate;
+          console.log(resultRate);
+          document.querySelector('#resultAmt').value = resultRate;
+
+          /*if (!!document.querySelector('#originAmt').value && document.querySelector('#originAmt').value == fromCur){
+            document.querySelector('#resultAmt').value = resultRate;
+          }else{
+
+          }
+          */
+          
         }).catch(() => {
           console.log('it failed');
           });
-
+          
         
       }
   }
@@ -120,91 +129,7 @@ window.addEventListener('load', function () {
     <!-- END nav --
   -->   
 
-    <section class="probootstrap-cover overflow-hidden relative"  style="background-image: url('assets/images/bg_1.jpg');" data-stellar-background-ratio="0.5"  id="section-home">
-      <div class="overlay"></div>
-      <div class="container">
-        <div class="row align-items-center">
-          <div class="col-md-4">
-            <h2 class="heading mb-2 display-4 font-light probootstrap-animate">Currency Converter When You Want it!</h2>
-            <p class="lead mb-5 probootstrap-animate" style="width: 80%;">
-              You have here a currency converter that helps to calculate exchange rate across over 150 world currencies. And it works even when you are offline!
-
-            </p>
-              <!--<a href="onepage.html" role="button" class="btn btn-primary p-3 mr-3 pl-5 pr-5 text-uppercase d-lg-inline d-md-inline d-sm-block d-block mb-3">Refresh page for Offline Access</a> -->
-            
-          </div> 
-          <div class="col-md-8 probootstrap-animate">
-            <div class="probootstrap-form">
-              <div class="form-group">
-                <div class="row mb-3">
-                  <div class="col-md">
-                    <div class="form-group">
-                      <label for="id_label_single">From</label>
-
-                      <label for="id_label_single" style="width: 100%;">
-                        <select class="js-example-basic-single js-states form-control" id="fromBx" name="fromBx" style="width: 100%;">
-                          
-                        </select>
-                      </label>
-
-
-                    </div>
-                  </div>
-                  <div class="col-md">
-                    <div class="form-group">
-                      <label for="id_label_single2">To</label>
-                      <div class="probootstrap_select-wrap">
-                        <label for="id_label_single2" style="width: 100%;">
-                        <select class="js-example-basic-single js-states form-control" id="toBx" name="toBx" style="width: 100%;">
-                          
-                        </select>
-                      </label>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <!-- END row -->
-                <div class="row mb-5">
-                  <div class="col-md">
-                    <div class="form-group">
-                      <label for="id_label_single2">Origin</label>
-                      <div class="probootstrap-date-wrap">
-                        
-                      
-                        <label for="id_label_single" style="width: 100%;">
-                        <input type="number" class="form-control" name="originAmt" id="origintAmt" onchange="processFormSubmit()" placeholder="Enter Amount" style="    box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.3);">
-                      </label>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md">
-                    <div class="form-group">
-                      <label for="probootstrap-date-arrival">Result</label>
-                      <div class="probootstrap-date-wrap">
-                         
-                        <input type="number" class="form-control" name="resultAmt" id="resultAmt" placeholder="Enter Amount" style="    box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.3);">
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <!-- END row -->
-                <div class="row">
-                  <div class="col-md">
-                    <label for="round" class="mr-5">Press this 'Convert' button</label>
-                    
-                  </div>
-                  <div class="col-md">
-                    <input type="submit" value="Convert" id="convertBtn" name="convertBtn"  onsubmit="processFormSubmit()" class="btn btn-primary btn-block">
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    
-    </section>
-    <!-- END section -->
+ 
     
 
     
@@ -215,7 +140,7 @@ window.addEventListener('load', function () {
       <div class="container">
         <div class="row text-center mb-5 probootstrap-animate">
           <div class="col-md-12">
-            <h2 class="display-4 border-bottom probootstrap-section-heading">About This App</h2>
+            <h2 class="display-4 border-bottom probootstrap-section-heading">About Christian Okpada</h2>
           </div>
         </div>
       </div>
@@ -223,14 +148,14 @@ window.addEventListener('load', function () {
         
 
     <section class="probootstrap-section-half d-md-flex" id="section-about">
-      <div class="probootstrap-image probootstrap-animate" data-animate-effect="fadeIn" style="background-image: url(assets/images/img_2.jpg)"></div>
+      <div class="probootstrap-image" data-animate-effect="fadeIn" style="background-image: url(assets/images/sq_img_1.jpg)"></div>
       <div class="probootstrap-text">
-        <div class="probootstrap-inner probootstrap-animate" data-animate-effect="fadeInRight">
-          <h2 class="heading mb-4">It's a jounrney!</h2>
-          <p>This the first prograssive web app (PWA) out of my jounrney in returning to programming via the Google Africa Challenge, powered by the Andela Learning Community (TM) and the made possible by the Udacity curriculum and platform.</p>
-          <p>It's the beginning of my new journey to modernize my skills while sharping my management capability in working with developers within my team.</p>
-		  <p>Not complete because of the deadline but given another 24 hours I should be done.  Thanks!</p>
-          <p><a href="#" class="btn btn-primary">Read More</a></p>
+        <div class="probootstrap-inner" data-animate-effect="fadeInRight">
+          <h2 class="heading mb-4">It's a journey!</h2>
+          <p>Christian Okpada founded Oconn Systems as a platform to provide tech solution services to corporate clients. Through this channel I have maintained a decade long experience in technology development, project operations, vendor and business development management, spanning the Oil & Gas, Energy, Construction/Real Estate, Public and Financial Sectors.</p>
+          <p>In the last 7 years I have gained experience in technology/innovation leadership of small to complex large-size projects, mostly within the Oil & Gas sector, working with C-Level decision makers, owners of billion-dollar ventures as well as SMEs and new startup campaigns; exploring and implementing digital transformation options to deploy excellence across diverse business functions.</p>
+		  <p>Oconn Systems solutions has served well over 2,000,000 people (client board/management, employees, vendors/applicants as well as government and citizens),  in the next decade (from 2019) I hope to be part of or to create  ambitious consumer-focused projects that will help to serve the needs of many: possibly a billion people. To achieve this I'm required to learn new emerging fields such as Big Data and AI while mastering so-called difficult options in Project, People and Enterprise Architecture and Management, Drupal, SharePoint, etc.</p>
+          <p><a href="#" class="btn btn-primary">Thank you!</a></p>
         </div>
       </div>
     </section>
@@ -246,7 +171,7 @@ window.addEventListener('load', function () {
         </div>
         <div class="row pt-5">
           <div class="col-md-12 text-center">
-            <p class="probootstrap_font-14">&copy; 2018. All Rights Reserved. <br> Designed &amp; by <a href="https://probootstrap.com/" target="_blank">ProBootstrap</a> and developed by Designed &amp; by <a href="https://github.com/ojchris/" target="_blank">Ojchris</a><small> (Don't remove credit link on this footer. See <a href="https://probootstrap.com/license/">license</a>)</small></p>
+            <p class="probootstrap_font-14">&copy; 2018. All Rights Reserved. <br> Designed &amp; by <a href="https://probootstrap.com/" target="_blank">ProBootstrap</a> &amp; Modified  by <a href="https://github.com/ojchris/" target="_blank">Ojchris</a></p>
             
           </div>
         </div>

@@ -5,8 +5,8 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-		<title>Currency Converter When you need it!</title>
-		<meta name="description" content="Currency Converter When you need it!">
+		<title>About Me</title>
+		<meta name="description" content="About Me">
 		<meta name="keywords" content="Progressive Web App">
     
     
@@ -28,82 +28,6 @@
     <link rel="stylesheet" href="assets/css/helpers.css">
     <link rel="stylesheet" href="assets/css/style.css">
 
-<script>
-    
-    
-document.getElementById('#resultAmt').addEventListener("change", processFormSubmit);
-function processFormSubmit(){
-
-//create variable from element values
-let amountToConvrt = document.querySelector('#origintAmt').value;
-let fromCurrcy = document.querySelector('#fromBx  option:checked').value;
-let toCurrcy = document.querySelector('#toBx  option:checked').value;
-//let originOrResultBx = which box changed
-
-if(!!amountToConvrt && !!fromCurrcy && !!toCurrcy){
-
-  convertCurrency(amountToConvrt, fromCurrcy, toCurrcy);
-  
-  function convertCurrency(amount, fromCurrency, toCurrency, cb) {
-        //var apiKey = 'your-api-key-here';
-
-        const fromCur = fromCurrency;
-        const toCur = toCurrency;
-        //let fromCurrency = encodeURIComponent(fromCur);
-        //let toCurrency = encodeURIComponent(toCur);
-        const query = `${fromCur}_${toCur}`;
-        let resultRate = null;
-
-        const url = `https://free.currencyconverterapi.com/api/v5/convert?q=${query}&compact=ultra`;
-        fetch(url).then(response => response.json()).then(data => {
-          let exchangeRate = data[query];
-          resultRate = exchangeRate * amount;
-          //return resultRate;
-          console.log(resultRate);
-          document.querySelector('#resultAmt').value = resultRate;
-
-          /*if (!!document.querySelector('#originAmt').value && document.querySelector('#originAmt').value == fromCur){
-            document.querySelector('#resultAmt').value = resultRate;
-          }else{
-
-          }
-          */
-          
-        }).catch(() => {
-          console.log('it failed');
-          });
-          
-        
-      }
-  }
-    
-}
-
-window.addEventListener('load', function () {
-        fetch('https://free.currencyconverterapi.com/api/v5/currencies').then(function(response){
-
-          return response.json();
-          }).then(function(data){
-          //let sortData = data.results;
-          //let currencies = sortData.sort();
-          let currencies = data.results;
-          for(key in currencies){
-            let currencyAbbr = currencies[key]['id'];
-            let currencyNm = currencies[key]['currencyName'];
-            let currencyCountry = `${currencyAbbr} - ${currencyNm}`;
-            let selectOptn = `<option value="${currencyAbbr}">${currencyCountry}</option>`
-            //console.log(selectOptn);
-            document.querySelector('#fromBx').innerHTML += selectOptn;
-            document.querySelector('#toBx').innerHTML += selectOptn;
-          }
-
-          }).catch(function(){
-          console.log('it failed');
-          });
-
-      });
-
-    </script>
 
 	</head>
 	<body>
@@ -140,7 +64,7 @@ window.addEventListener('load', function () {
       <div class="container">
         <div class="row text-center mb-5 probootstrap-animate">
           <div class="col-md-12">
-            <h2 class="display-4 border-bottom probootstrap-section-heading">About Christian Okpada</h2>
+            <h2 class="display-4 border-bottom probootstrap-section-heading">About O. J. Chris</h2>
           </div>
         </div>
       </div>
@@ -152,7 +76,7 @@ window.addEventListener('load', function () {
       <div class="probootstrap-text">
         <div class="probootstrap-inner" data-animate-effect="fadeInRight">
           <h2 class="heading mb-4">It's a journey!</h2>
-          <p>Christian Okpada founded Oconn Systems as a platform to provide tech solution services to corporate clients. Through this channel I have maintained a decade long experience in technology development, project operations, vendor and business development management, spanning the Oil & Gas, Energy, Construction/Real Estate, Public and Financial Sectors.</p>
+          <p>Ojchris founded Oconn Systems as a vehicle to provide tech solution services to corporate clients. Through this channel I have maintained a decade long experience in technology development, project operations, vendor and business development management, spanning the Oil & Gas, Energy, Construction/Real Estate, Public and Financial Sectors.</p>
           <p>In the last 7 years I have gained experience in technology/innovation leadership of small to complex large-size projects, mostly within the Oil & Gas sector, working with C-Level decision makers, owners of billion-dollar ventures as well as SMEs and new startup campaigns; exploring and implementing digital transformation options to deploy excellence across diverse business functions.</p>
 		  <p>Oconn Systems solutions has served well over 2,000,000 people (client board/management, employees, vendors/applicants as well as government and citizens),  in the next decade (from 2019) I hope to be part of or to create  ambitious consumer-focused projects that will help to serve the needs of many: possibly a billion people. To achieve this I'm required to learn new emerging fields such as Big Data and AI while mastering so-called difficult options in Project, People and Enterprise Architecture and Management, Drupal, SharePoint, etc.</p>
           <p><a href="#" class="btn btn-primary">Thank you!</a></p>
